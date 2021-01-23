@@ -5,30 +5,69 @@ use std::path::Path;
 
 const NUM_GPR: usize = 32;
 
+#[derive(Default)]
 struct Cpu {
 
-    gpr_registers: [u64; NUM_GPR],
-    fpr_registers: [f64; NUM_GPR],
+    register_gpr: [u64; NUM_GPR],
+    register_fpr: [f64; NUM_GPR],
 
    
-    pc_register: u64,
+    register_pc: u64,
 
-    hi_register: u64,
-    lo_register: u64,
+    register_hi: u64,
+    register_lo: u64,
 
-    load_link_register: bool, //TODO
+    register_load_link: bool, //TODO add enum type
 
-    fcr0_register: u32,
-    fcr31_register: u32,
+    register_fcr0: u32,
+    register_fcr31: u32,
+
+    cp0: Cp0
 }
 
 impl Cpu { 
-    fn new() -> Cpu {
-        Cpu {
-            //Fil this
+        fn new() -> Cpu {
+            Cpu::default()
+        }
+
+        fn hard_reset(&mut self) {
+                self.cp0.hard_reset(); 
         }
     }
 
+#[derive(Default)]
+struct Cp0 {
+    reg_index: u64,
+    reg_random: u64,
+    reg_entrylo0: u64,
+    reg_entrylo1: u64,
+    reg_context: u64,
+    reg_page_mask: u64,
+    reg_wired: u64,
+    reg_bad_v_addr: u64,
+    reg_count: u64,
+    reg_entry_hi: u64,
+    reg_compare: u64,
+    reg_status: u64,
+    reg_cause: u64,
+    reg_epc: u64,
+    reg_prid: u64,
+    reg_config: u64,
+    reg_load_link_address: u64,
+    reg_watch_lo: u64,
+    reg_watch_hi: u64,
+    reg_x_context: u64,
+    reg_tag_lo: u64,
+    reg_tag_hi: u64,
+    reg_error_epc: u64
+}
+impl Cp0 {
+    fn new() -> Cp0 {
+        Cp0::default()
+    }
+    fn hard_reset(&mut self) {
+        //todo
+    }
 }
 
 fn main() {
